@@ -24,4 +24,6 @@ int main(){
     std::cout << "Vector Add (CPU)" << std::endl;
     std::cout << "Vector size: " << N << std::endl;
     std::cout << "Execution Time: " << duration << " ms" << std::endl;
+
+    return 0;
 }

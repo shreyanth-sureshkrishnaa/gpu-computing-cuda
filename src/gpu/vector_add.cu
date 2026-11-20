@@ -69,6 +69,20 @@ int main(){
     cudaEventElapsedTime(
         &gpu_time_ms, gpu_start, gpu_stop
     );
+
+    // Calculate effective memory bandwidth and compute throughput:
+
+    double total_bytes = 3.0 * N * sizeof(float);
+    double seconds = gpu_time_ms / 1000.0;
+
+    double bandwidth_GBs = total_bytes / seconds / 1e9;
+
+    double total_flops = N;
+    double throughput_GFLOPS = total_flops / seconds / 1e9;
+
+    std::cout << "Effective Bandwidth: " << bandwidth_GBs << " GB/s\n";
+
+    std::cout << "Effective Throughput: "<< throughput_GFLOPS << " GFLOP/s\n";
     
     // Wait for GPU computation: 
     cudaDeviceSynchronize();
@@ -91,7 +105,7 @@ int main(){
     // Destroy the CUDA Events:
     cudaEventDestroy(gpu_start);
     cudaEventDestroy(gpu_stop);
-    
+
     // Release GPU memory:
     cudaFree(d_A);
     cudaFree(d_B);
